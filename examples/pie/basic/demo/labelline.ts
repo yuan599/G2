@@ -1,11 +1,9 @@
 import { Chart } from '@antv/g2';
 
 const data = [
-  { item: '事例一', count: 40, percent: 0.4 },
-  { item: '事例二', count: 21, percent: 0.21 },
-  { item: '事例三', count: 17, percent: 0.17 },
-  { item: '事例四', count: 13, percent: 0.13 },
-  { item: '事例五', count: 9, percent: 0.09 },
+  { item: '1000-2000', percent: 0.602 },
+  { item: '2000-3000', percent: 0.278 },
+  { item: '1000以内', percent: 0.12 },
 ];
 
 const chart = new Chart({
@@ -13,6 +11,9 @@ const chart = new Chart({
   autoFit: true,
   height: 500,
 });
+
+// 设置图表标题
+chart.title('生活费水平分布饼状图');
 
 chart.coordinate('theta', {
   radius: 0.75,
@@ -37,13 +38,26 @@ chart
   .position('percent')
   .color('item')
   .label('percent', {
-    layout: [{ type: 'limit-in-plot', cfg: { action: 'ellipsis'/** 或 translate */ } }],
+    layout: [{ type: 'limit-in-plot', cfg: { action: 'ellipsis' } }],
     content: (data) => {
-      return `${data.item}: ${data.percent * 100}%`;
+      return `${data.item}: ${(data.percent * 100).toFixed(2)}%`;
     },
   })
   .adjust('stack');
 
 chart.interaction('element-active');
+
+chart.theme({
+  styleSheet: {
+    brandColor: '#FF6B3B',
+    paletteQualitative10: [
+      '#FF6B3B', '#626681', '#FFC100', '#9FB40F', '#76523B', '#DAD5B5', '#0E8E89', '#E19348', '#F383A2', '#247FEA',
+    ],
+    paletteQualitative20: [
+      '#FF6B3B', '#626681', '#FFC100', '#9FB40F', '#76523B', '#DAD5B5', '#0E8E89', '#E19348', '#F383A2', '#247FEA',
+      '#2BCB95', '#B1ABF4', '#1D42C2', '#1D9ED1', '#D64BC0', '#255634', '#8C8C47', '#8CDAE5', '#8E283B', '#791DC9',
+    ],
+  },
+});
 
 chart.render();
